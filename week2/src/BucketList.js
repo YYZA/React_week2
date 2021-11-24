@@ -31,7 +31,7 @@ const BucketList = (props) => {
         );
       })}
       <Link className="link" to="/test">
-        넘어가기
+        +
       </Link>
     </ListStyle>
   );
@@ -76,17 +76,6 @@ const TitleWord = styled.p`
   padding: 5px;
   width: 15%;
   border-radius: 10px;
-`;
-
-const Btn = styled.button`
-  color: white;
-  font-size: 20px;
-  padding: 10px 20px;
-  margin-left: 100px;
-  margin-top: 20px;
-  border-radius: 10px;
-  background-color: slateblue;
-  cursor: pointer;
 `;
 
 export default BucketList;

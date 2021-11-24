@@ -1,10 +1,12 @@
 .link {
   color: white;
-  font-size: 20px;
-  margin-left: 100px;
-  padding: 10px 30px;
+  font-size: 50px;
+  padding-bottom: 10px;
+  margin-left: 130px;
+  margin-top: 50px;
+  text-align: center;
   background: slateblue;
-  border-radius: 10px;
+  border-radius: 50%;
   font-weight: 800;
   text-decoration-line: none;
   width: 80px;
