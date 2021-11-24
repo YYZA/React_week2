@@ -15,13 +15,14 @@ function App() {
   return (
     <div className="App">
       <Container>
-        <Title>내 버킷리스트</Title>
+        <Title>My_Dictionary</Title>
         <Line />
         {/* 컴포넌트를 넣어줍니다. */}
         {/* <컴포넌트 명 [props 명]={넘겨줄 것(리스트, 문자열, 숫자, ...)}/> */}
         <Route exact path="/" component={BucketList} />
-        <Route path="/test" exact component={Test} />
-        <Link to="/test">넘어가기</Link>
+        <Route path="/test">
+          <Test />
+        </Route>
       </Container>
     </div>
   );
@@ -29,12 +30,13 @@ function App() {
 
 const Container = styled.div`
   max-width: 350px;
-  min-height: 60vh;
+  min-height: 80vh;
   background-color: #fff;
   padding: 16px;
   margin: 20px auto;
   border-radius: 5px;
   border: 1px solid #ddd;
+  box-shadow: 3px 5px 5px 3px gray;
 `;
 
 const Title = styled.h1`

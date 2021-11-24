@@ -1,49 +1,87 @@
-import React from "react";
+import React, { useRef, useEffect } from "react";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
-// useDispatch를 가져와요!
 import { useDispatch } from "react-redux";
-// 액션생성함수도 가져오고요!
-import { createBucket } from "./redux/modules/bucket";
+import { addBucketFB } from "./redux/modules/bucket";
+import { Link } from "react-router-dom";
+import "./App.css";
 
 // BucketList 컴포넌트를 import 해옵니다.
 // import [컴포넌트 명] from [컴포넌트가 있는 파일경로];
 
-function Test() {
-  const text = React.useRef(null);
-  const text2 = React.useRef(null);
-  const text3 = React.useRef(null);
-  // useHistory 사용하는 것과 비슷하죠? :)
+function Test(props) {
+  const wordInput = useRef();
+  const descInput = useRef();
+  const exampleInput = useRef();
+
   const dispatch = useDispatch();
 
   const addBucketList = () => {
-    dispatch(createBucket(text.current.value));
-    dispatch(createBucket(text2.current.value));
-    dispatch(createBucket(text3.current.value));
+    const word = {
+      id: 4,
+      textDic: wordInput.current.value,
+      textExplain: descInput.current.value,
+      textExam: exampleInput.current.value,
+    };
+    dispatch(addBucketFB(word));
   };
 
   return (
     <div className="App">
+      <Title>단어 추가하기</Title>
       <Input>
-        <input type="text" ref={text} />
-        <input type="text" ref={text2} />
-        <input type="text" ref={text3} />
-        <Link to="/">
-          <button onClick={addBucketList}>추가하기</button>
-        </Link>
+        <p>Word</p>
+        <Text name="word" ref={wordInput} />
       </Input>
+      <Input>
+        <p>Description</p>
+        <Text name="desc" ref={descInput} />
+      </Input>
+      <Input2>
+        <p>Example</p>
+        <Text name="example" ref={exampleInput} />
+      </Input2>
+      <Link onClick={addBucketList} to="/" className="link2">
+        추가하기
+      </Link>
     </div>
   );
 }
 
 const Input = styled.div`
+  color: slateblue;
+  text-align: center;
   max-width: 350px;
   min-height: 10vh;
-  background-color: #fff;
+  background-color: aliceblue;
   padding: 16px;
   margin: 20px auto;
   border-radius: 5px;
   border: 1px solid #ddd;
+  font-weight: 800;
+`;
+const Input2 = styled.div`
+  color: slateblue;
+  text-align: center;
+  max-width: 350px;
+  min-height: 10vh;
+  background-color: aliceblue;
+  padding: 16px;
+  margin: 20px auto;
+  margin-bottom: 50px;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+  font-weight: 800;
+`;
+
+const Text = styled.input`
+  margin: 10px;
+  height: 30px;
+  width: 250px;
+`;
+
+const Title = styled.h3`
+  color: slateblue;
+  text-align: center;
 `;
 
 export default Test;
