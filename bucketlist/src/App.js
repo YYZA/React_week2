@@ -9,13 +9,14 @@ import Detail from "./Detail";
 import NotFound from "./NotFound";
 import { useDispatch } from "react-redux";
 import { createBucket } from "./redux/modules/bucket";
+import Progress from "./Progress";
 
 function App() {
   const text = React.useRef(null);
   const dispatch = useDispatch();
 
   const addBucketList = () => {
-    dispatch(createBucket(text.current.value));
+    dispatch(createBucket({ text: text.current.value, completed: false }));
   };
 
   // console.log(list);
@@ -23,6 +24,7 @@ function App() {
     <div className="App">
       <Container>
         <Title>내 버킷리스트</Title>
+        <Progress />
         <Line />
         {/* 컴포넌트를 넣어줍니다. */}
         {/* <컴포넌트 명 [props 명]={넘겨줄 것(리스트, 문자열, 숫자, ...)}/> */}
@@ -39,6 +41,13 @@ function App() {
         <input type="text" ref={text} />
         <button onClick={addBucketList}>추가하기</button>
       </Input>
+      <button
+        onClick={() => {
+          window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+        }}
+      >
+        위로가기
+      </button>
     </div>
   );
 }
