@@ -53,13 +53,41 @@ function App() {
 }
 
 const Input = styled.div`
+  display: flex;
   max-width: 350px;
-  min-height: 10vh;
+  min-height: 30px;
   background-color: #fff;
   padding: 16px;
   margin: 20px auto;
   border-radius: 5px;
   border: 1px solid #ddd;
+  & > * {
+    padding: 5px;
+  }
+  & input {
+    border: 1px solid #888;
+    border-radius: 5px;
+    width: 70%;
+    margin-right: 10px;
+  }
+
+  & input:focus {
+    outline: none;
+    border: 1px solid #a673ff;
+  }
+
+  & button {
+    width: 25%;
+    color: #fff;
+    border: #a673ff;
+    background-color: #a673ff;
+    border-radius: 5px;
+  }
+  & button:hover {
+    transition: 300ms;
+    background-color: #673ab7;
+    cursor: pointer;
+  }
 `;
 
 const Container = styled.div`

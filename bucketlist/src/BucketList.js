@@ -32,15 +32,20 @@ const BucketList = (props) => {
 const ListStyle = styled.div`
   display: flex;
   flex-direction: column;
-  height: 100%;
+  height: 50vh;
   overflow-x: hidden;
   overflow-y: auto;
+  max-height: 50vh;
 `;
 
 const ItemStyle = styled.div`
+  cursor: pointer;
   padding: 16px;
   margin: 8px;
-  background-color: ${(props) => (props.completed ? "orange" : "aliceblue")};
+  border-radius: 10px;
+  box-shadow: 2px 2px 2px 2px slateblue;
+  color: ${(props) => (props.completed ? "#fff" : "#333")};
+  background-color: ${(props) => (props.completed ? "#673ab7" : "aliceblue")};
 `;
 
 export default BucketList;
