@@ -2,7 +2,7 @@
 import React from "react";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { removeBucket, updateBucket } from "./redux/modules/bucket";
+import { removeBucketFB, updateBucketFB } from "./redux/modules/bucket";
 import { useHistory } from "react-router-dom";
 
 const Detail = (props) => {
@@ -14,11 +14,11 @@ const Detail = (props) => {
 
   return (
     <div>
-      <h1>{bucket_list[bucket_index].text}</h1>
+      <h1>{bucket_list[bucket_index] ? bucket_list[bucket_index].text : ""}</h1>
       <button
         onClick={() => {
           history.goBack();
-          dispatch(updateBucket(bucket_index));
+          dispatch(updateBucketFB(bucket_list[bucket_index].id));
         }}
       >
         완료하기
@@ -26,7 +26,7 @@ const Detail = (props) => {
       <button
         onClick={() => {
           history.goBack();
-          dispatch(removeBucket(bucket_index));
+          dispatch(removeBucketFB(bucket_list[bucket_index].id));
         }}
       >
         삭제하기

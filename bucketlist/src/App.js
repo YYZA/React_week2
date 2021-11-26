@@ -8,18 +8,35 @@ import BucketList from "./BucketList";
 import Detail from "./Detail";
 import NotFound from "./NotFound";
 import { useDispatch } from "react-redux";
-import { createBucket } from "./redux/modules/bucket";
+import {
+  addBucketFB,
+  createBucket,
+  loadBucketFB,
+} from "./redux/modules/bucket";
 import Progress from "./Progress";
+import { db } from "./firebase";
+import {
+  collection,
+  getDoc,
+  getDocs,
+  addDoc,
+  updateDoc,
+  deleteDoc,
+  doc,
+} from "firebase/firestore";
 
 function App() {
   const text = React.useRef(null);
   const dispatch = useDispatch();
 
   const addBucketList = () => {
-    dispatch(createBucket({ text: text.current.value, completed: false }));
+    dispatch(addBucketFB({ text: text.current.value, completed: false }));
   };
 
-  // console.log(list);
+  React.useEffect(() => {
+    dispatch(loadBucketFB());
+  }, []);
+
   return (
     <div className="App">
       <Container>
