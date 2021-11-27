@@ -13,6 +13,7 @@ import { async } from "@firebase/util";
 // Actions
 const LOAD = "bucket/LOAD";
 const CREATE = "bucket/CREATE";
+const REMOVE = "bucket/REMOVE";
 
 const initailState = {
   list: [],
@@ -24,6 +25,10 @@ export function loadBucket(bucket_list) {
 }
 export function createBucket(bucket) {
   return { type: CREATE, bucket };
+}
+
+export function removeBucket(bucket_index) {
+  return { type: REMOVE, bucket_index };
 }
 
 // middlewares
@@ -43,12 +48,31 @@ export const loadBucketFB = () => {
   };
 };
 
+export const removeBucketFB = (bucket_id) => {
+  console.log(bucket_id);
+  return async function (dispatch, getState) {
+    if (!bucket_id) {
+      window.alert("아이디가 없네요");
+      return;
+    }
+    const docRef = doc(db, "dictionary", bucket_id);
+    await deleteDoc(docRef);
+
+    const _bucket_list = getState().bucket.list;
+    const bucket_index = _bucket_list.findIndex((b) => {
+      return b.id === bucket_id;
+    });
+
+    dispatch(removeBucket(bucket_index));
+  };
+};
+
 export const addBucketFB = (dict) => {
   return async function (dispatch) {
     const docRef = await addDoc(collection(db, "dictionary"), { dict });
     const _bucket = await getDoc(docRef);
     const bucket_data = { ..._bucket.data(), id: _bucket.id };
-
+    console.log(bucket_data);
     dispatch(createBucket(bucket_data));
   };
 };
@@ -61,8 +85,14 @@ export default function reducer(state = initailState, action = {}) {
     }
     // do reducer stuff
     case CREATE: {
-      const new_bucket_list = [...state.list, action.bucket];
+      const new_bucket_list = [...state.list];
       return { list: new_bucket_list };
+    }
+    case REMOVE: {
+      const remove_bucket_list = state.list.filter((l, idx) => {
+        return parseInt(action.bucket_index) !== idx;
+      });
+      return { list: remove_bucket_list };
     }
 
     default:

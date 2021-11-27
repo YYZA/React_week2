@@ -3,7 +3,8 @@ import React from "react";
 import styled from "styled-components";
 // redux 훅 중, useSelector를 가져옵니다.
 import { useSelector, useDispatch } from "react-redux";
-import { loadBucketFB } from "./redux/modules/bucket";
+import { loadBucketFB, removeBucketFB } from "./redux/modules/bucket";
+import { useHistory } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { compose } from "redux";
 import "./App.css";
@@ -11,31 +12,62 @@ import "./App.css";
 const BucketList = (props) => {
   const my_lists = useSelector((state) => state.bucket.list);
   const dispatch = useDispatch();
+  const history = useHistory();
 
   React.useEffect(() => {
     dispatch(loadBucketFB());
   }, []);
 
   return (
-    <ListStyle>
-      {my_lists.map((list, index) => {
-        return (
-          <CardsBox key={list.id}>
-            <TitleWord>Word</TitleWord>
-            <ItemStyle>{list.dict.textDic}</ItemStyle>
-            <Title>Description</Title>
-            <ItemStyle>{list.dict.textExplain}</ItemStyle>
-            <Title>Example</Title>
-            <BlueItemStyle>{list.dict.textExam}</BlueItemStyle>
-          </CardsBox>
-        );
-      })}
-      <Link className="link" to="/test">
+    <>
+      <ListStyle>
+        {my_lists.map((list, index) => {
+          return (
+            <CardsBox key={list.id}>
+              <DivBtn>
+                <TitleWord>Word</TitleWord>
+                <Btn
+                  onClick={() => {
+                    dispatch(removeBucketFB(list.id));
+                  }}
+                >
+                  X
+                </Btn>
+              </DivBtn>
+              <ItemStyle>{list.dict.textDic}</ItemStyle>
+              <Title>Description</Title>
+              <ItemStyle>{list.dict.textExplain}</ItemStyle>
+              <Title>Example</Title>
+              <BlueItemStyle>{list.dict.textExam}</BlueItemStyle>
+            </CardsBox>
+          );
+        })}
+      </ListStyle>
+      <button
+        onClick={() => {
+          history.push("/test");
+        }}
+        className="link"
+      >
         +
-      </Link>
-    </ListStyle>
+      </button>
+    </>
   );
 };
+
+const DivBtn = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
+const Btn = styled.button`
+  margin: 10px;
+  font-weight: 600;
+  color: white;
+  cursor: pointer;
+  border-radius: 50%;
+  background-color: #e54949;
+`;
 
 const ListStyle = styled.div`
   display: flex;
@@ -43,6 +75,7 @@ const ListStyle = styled.div`
   height: 100%;
   overflow-x: hidden;
   overflow-y: auto;
+  max-height: 55vh;
 `;
 
 const CardsBox = styled.div`
